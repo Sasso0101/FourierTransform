@@ -1,40 +1,124 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+	<title>reveal.js</title>
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/black.css">
+
+	<!-- Theme used for syntax highlighted code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css">
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown data-background-gradient="linear-gradient(to bottom, #283b95, #17b2c3)">
+				<textarea data-template>
+					## The Fourier transform and its applications
+				</textarea>
+			</section>
+			<section>
+				<h2>Outline</h2>
+				<p class="fragment" data-fragment-index="1">A mathematical problem</p>
+				<p class="fragment" data-fragment-index="2">The Fourier transform</p>
+				<p class="fragment" data-fragment-index="3">Applications of the Fourier transform</p>
+			</section>
+			<section data-auto-animate>
+				<h3>The mathematical problem</h3>
+				<video data-autoplay data-src="manim/media/videos/fn1/1080p60/fn1.mp4"></video>
+				<p>How can we find its frequency?</p>
+			</section>
+			<section data-auto-animate>
+				<h3>The mathematical problem</h3>
+				<video data-autoplay data-src="manim/media/videos/fn2/1080p60/fn2.mp4"></video>
+				<p>Two signals with different frequecies</p>
+			</section>
+			<section data-auto-animate>
+				<h3>The mathematical problem</h3>
+				<video data-autoplay data-src="manim/media/videos/fn3/1080p60/fn3.mp4"></video>
+				<p>How can we find its frequency?</p>
+			</section>
+			<section data-auto-animate>
+				<h3>The Fourier transform</h3>
+				<p>Mathematical tool able to decompose the signal in its original frequencies</p>
+				<video data-autoplay data-src="manim/media/videos/transform1/1080p60/transform1.mp4"></video>
+			</section>
+			<section data-transition="none">
+				<h3>The Fourier transform</h3>
+				<video data-autoplay src="manim/media/videos/frequencies/1080p60/sections/frequencies_0000.mp4"></video>
+				<!-- remark that we can also multiply with the sine -->
+			</section>
+			<section data-transition="none">
+				<h3>The Fourier transform</h3>
+				<video data-autoplay src="manim/media/videos/frequencies/1080p60/sections/frequencies_0001.mp4"></video>
+			</section>
+			<section data-transition="none">
+				<h3>The Fourier transform</h3>
+				<video data-autoplay src="manim/media/videos/frequencies/1080p60/sections/frequencies_0002.mp4"></video>
+			</section>
+			<section data-transition="none">
+				<h3>The Fourier transform</h3>
+				<video data-autoplay src="manim/media/videos/frequencies/1080p60/sections/frequencies_0003.mp4"></video>
+			</section>
+			<section data-transition="none">
+				<h3>The Fourier transform</h3>
+				<video data-autoplay src="manim/media/videos/frequencies/1080p60/sections/frequencies_0004.mp4"></video>
+			</section>
+			<section data-transition="none">
+				<h3>The Fourier transform</h3>
+				<video data-autoplay src="manim/media/videos/frequencies/1080p60/sections/frequencies_0005.mp4"></video>
+			</section>
+			<section data-transition="none">
+				<h3>The Fourier transform</h3>
+				<video data-autoplay src="manim/media/videos/transform3/1080p60/transform3.mp4" height="450px"></video>
+				<p>Plotting the result of the integral as we change the frequency</p>
+			</section>
+			<section data-transition="none">
+				<h3>The Fourier transform</h3>
+				<video data-autoplay data-src="manim/media/videos/transform1/1080p60/transform1.mp4"></video>
+				<p>Sum of two frequencies</p>
+			</section>
+			<section data-transition="none">
+				<h3>The Fourier transform</h3>
+				<video data-autoplay src="manim/media/videos/transform2/1080p60/transform2.mp4"></video>
+				<p>Decaying signal with frequency 3Hz</p>
+			</section>
+			<section data-transition="none">
+				<h3>Applications in audio processing</h3>
+				<p>Sound is change in air pressure</p>
+				<p class="fragment" data-fragment-index="1">The A (La) note is a sine wave with frequency 440Hz</p>
+				<p class="fragment" data-fragment-index="2">Talking or music is a sum of many different frequencies in the audible spectrum (20Hz - 20000Hz)</p>
+				<p class="fragment" data-fragment-index="3">We can perform a Fourier transform on them!</p>
+			</section>
+			<section data-transition="none">
+				<h3>Spectrogram</h3>
+				<iframe data-src="audio.html" width="100%" style="height: 500px;"></iframe>
+			</section>
 		</div>
+	</div>
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script src="plugin/math/math.js"></script>
+	<script>
+		// More info about initialization & config:
+		// - https://revealjs.com/initialization/
+		// - https://revealjs.com/config/
+		Reveal.initialize({
+			hash: true,
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX]
+		});
+	</script>
+</body>
+
 </html>

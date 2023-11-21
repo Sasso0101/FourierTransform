@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <audio id="audio" src="blinding.mp3"></audio>
+    <div class="controls">
+        <label>
+            <input type="checkbox" id="mic">
+            🎤 Microphone
+        </label>
+        <label>
+            <input type="checkbox" id="tone">
+            🎶 440Hz
+        </label>
+        <label>
+            <input type="checkbox" id="classical">
+            🎻 Classical music
+        </label>
+        <label>
+            <input type="checkbox" id="electronic">
+            👾 Electronic music
+        </label>
+        <label>
+            <input type="checkbox" id="lpf">
+            🧐 Filter
+        </label>
+    </div>
+
+    <div id="container"></div>
+    <script type="module">
+        import AudioMotionAnalyzer from './audioMotion-analyzer.js';
+        let audioEl = document.getElementById('audio');
+
+        function drawCallback(instance, info) {
+            const baseSize = (instance.isFullscreen ? 40 : 20) * instance.pixelRatio,
+                canvas = instance.canvas,
+                centerX = canvas.width / 2,
+                centerY = canvas.height / 2,
+                ctx = instance.canvasCtx,
+                maxHeight = centerY / 2,
+                maxWidth = centerX - baseSize * 5,
+                time = info.timestamp / 1e4;
+
+            // the energy value is used here to increase the font size and make the logo pulsate to the beat
+            ctx.font = `${baseSize + instance.getEnergy() * 25 * instance.pixelRatio}px Orbitron, sans-serif`;
+        }
+
+        const audioMotion = new AudioMotionAnalyzer(
+            document.getElementById('container'),
+            {
+                height: window.innerHeight - 50,
+                mode: 0,
+                barSpace: .3,
+                ledBars: true,
+                showPeaks: false,
+                showScaleY: true,
+                frequencyScale: 'linear',
+                onCanvasDraw: drawCallback
+            }
+        );
+
+        let toneContext, oscillator;
+
+        const toneButton = document.getElementById('tone');
+        toneButton.addEventListener('click', () => {
+            if (toneButton.checked) {
+                toneContext = new AudioContext();
+                oscillator = toneContext.createOscillator();
+                const gainNode = toneContext.createGain();
+
+                oscillator.frequency.value = 440; // set 440Hz frequency
+                oscillator.connect(gainNode); // connect oscillator -> gainNode
+
+                gainNode.gain.value = .5; // set volume to 50%
+                gainNode.connect(toneContext.destination); // connect gainNode -> audioMotion
+                oscillator.start();
+            } else {
+                oscillator.stop();
+            }
+        });
+
+        const micButton = document.getElementById('mic');
+        let micStream;
+
+        micButton.addEventListener('change', () => {
+            if (micButton.checked) {
+                if (navigator.mediaDevices) {
+                    navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+                        .then(stream => {
+                            // create stream using audioMotion audio context
+                            micStream = audioMotion.audioCtx.createMediaStreamSource(stream);
+                            // connect microphone stream to analyzer
+                            audioMotion.connectInput(micStream);
+                            // mute output to prevent feedback loops from the speakers
+                            audioMotion.volume = 0;
+                        })
+                        .catch(err => {
+                            alert('Microphone access denied by user');
+                        });
+                }
+                else {
+                    alert('User mediaDevices not available');
+                }
+            }
+            else {
+                // disconnect and release microphone stream
+                audioMotion.disconnectInput(micStream, true);
+            }
+        });
+
+        const baseNode = audioMotion.audioCtx.createMediaElementSource(audioEl);
+
+        const classical = document.getElementById('classical');
+        classical.addEventListener('change', () => {
+            if (classical.checked) {
+                audioMotion.disconnectInput();
+                audioEl.src = "./classical.mp3";
+                audioMotion.connectInput(baseNode);
+                audioEl.play();
+            } else {
+                audioEl.pause();
+                audioMotion.disconnectInput(baseNode, true);
+            }
+        })
+
+        const electronic = document.getElementById('electronic');
+        electronic.addEventListener('change', () => {
+            if (electronic.checked) {
+                audioMotion.disconnectInput();
+                audioEl.src = "./blinding.mp3";
+                audioMotion.connectInput(baseNode);
+                audioEl.play();
+            } else {
+                audioEl.pause();
+                audioMotion.disconnectInput(baseNode, true);
+            }
+        })
+
+        const lowpassfilter = document.getElementById('lpf');
+        let biquadFilter;
+
+        lowpassfilter.addEventListener('change', () => {
+            if (lowpassfilter.checked) {
+                audioMotion.disconnectInput(baseNode, false);
+                biquadFilter = audioMotion.audioCtx.createBiquadFilter();
+                baseNode.connect(biquadFilter)
+                biquadFilter.type = "lowpass";
+                biquadFilter.frequency.value = 1000;
+                audioMotion.connectInput(biquadFilter);
+                audioEl.play();
+            } else {
+                audioMotion.disconnectInput(biquadFilter, false);
+                audioMotion.connectInput(baseNode);
+            }
+        })
+
+        
+    </script>
+</body>
+
+</html>

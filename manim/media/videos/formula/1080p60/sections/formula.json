@@ -1,0 +1,24 @@
+[
+    {
+        "name": "autocreated",
+        "type": "default.normal",
+        "video": "formula_0000.mp4",
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "avg_frame_rate": "60/1",
+        "duration": "3.000000",
+        "nb_frames": "180"
+    },
+    {
+        "name": "unnamed",
+        "type": "default.normal",
+        "video": "formula_0001.mp4",
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "avg_frame_rate": "60/1",
+        "duration": "1.000000",
+        "nb_frames": "60"
+    }
+]

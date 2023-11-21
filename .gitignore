@@ -10,8 +10,8 @@ tmp/**
 node_modules/
 .sass-cache
 __pycache__/
-media/images/
-media/Tex/
-media/texts/
+manim/media/images/
+manim/media/Tex/
+manim/media/texts/
 480p15/
 partial_movie_files/

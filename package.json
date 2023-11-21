@@ -100,5 +100,8 @@
       "no-eq-null": 2,
       "no-unused-expressions": 0
     }
+  },
+  "dependencies": {
+    "audiomotion-analyzer": "^4.3.0"
   }
 }
